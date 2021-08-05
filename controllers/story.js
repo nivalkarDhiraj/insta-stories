@@ -75,7 +75,7 @@ module.exports.getStoriesById = (req, res) => {
 // 		});
 // };
 module.exports.getAllStories = (req, res) => {
-	User.find({ stories :{ $size: 0 } }
+	User.find({ 'stories.0' :{ $exists: true} }
 		).select("-password -following -followers").populate("stories", "_id video_url uploaded_by viewed_by created_at")
 		.then((stories) => {
 			res.json(stories);
