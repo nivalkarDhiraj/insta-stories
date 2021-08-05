@@ -17,18 +17,29 @@ const userSchema = new mongoose.Schema({
 		type: "string",
 		required: true,
 	},
-    image_url:{
-        type: "string",
-        default : "https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png"
-    },
-    following: [{
-        type: ObjectId,
-        ref: "User"
-    }],
-    followers: [{
-        type: ObjectId,
-        ref: "User"
-    }]
+	image_url: {
+		type: "string",
+		default:
+			"https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png",
+	},
+	following: [
+		{
+			type: ObjectId,
+			ref: "User",
+		},
+	],
+	followers: [
+		{
+			type: ObjectId,
+			ref: "User",
+		},
+	],
+	stories: [
+		{
+			type: ObjectId,
+			ref: "Story",
+		},
+	],
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -2,7 +2,8 @@ const express = require("express");
 require("dotenv").config();
 const morgan = require("morgan"); //logger
 const mongoose = require("mongoose");
-const userRouter = require("./routes/user")
+const userRouter = require("./routes/user");
+const storyRouter = require("./routes/story");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ mongoose.connect(mongodbURI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
+	useFindAndModify: false
 });
 mongoose.Promise = global.Promise;
 
@@ -27,6 +29,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/user", userRouter);
+app.use("/story", storyRouter);
 app.get("/", (req, res) => res.send("Hello World!!!"));
 
 app.listen(PORT, () => {
