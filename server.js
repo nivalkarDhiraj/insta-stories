@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const morgan = require("morgan"); //logger
 const mongoose = require("mongoose");
+const cors = require("cors");
 const userRouter = require("./routes/user");
 const storyRouter = require("./routes/story");
 
@@ -27,6 +28,7 @@ mongoose.connection.on("error", (error) => {
 
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/story", storyRouter);
