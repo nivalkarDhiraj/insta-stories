@@ -1,0 +1,57 @@
+[
+    {   
+        "id": 1,
+        "name": "Ankur",
+        "photo": "https://randomuser.me/api/portraits/men/15.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Dheeraj",
+        "photo": "https://randomuser.me/api/portraits/men/14.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Lenin",
+        "photo": "https://randomuser.me/api/portraits/men/13.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Honey",
+        "photo": "https://randomuser.me/api/portraits/women/15.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Pratiksha",
+        "photo": "https://randomuser.me/api/portraits/women/10.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Vaishanavi",
+        "photo": "https://randomuser.me/api/portraits/women/11.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Manan",
+        "photo": "https://randomuser.me/api/portraits/men/11.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Saurav",
+        "photo": "https://randomuser.me/api/portraits/men/12.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Rudy",
+        "photo": "https://randomuser.me/api/portraits/men/16.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Bali",
+        "photo": "https://randomuser.me/api/portraits/men/17.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Ashish",
+        "photo": "https://randomuser.me/api/portraits/men/18.jpg"
+    }
+]
