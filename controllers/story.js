@@ -27,7 +27,8 @@ async function monitorDeleteStory() {
 monitorDeleteStory();
 
 module.exports.postVideo = (req, res) => {
-	const { story_url, story_type } = req.body;
+	const { story_url } = req.body;
+	const story_type = "video";
 	const userId = req.user._id;
 	if (!story_url || !story_type) {
 		return res.status(400).json({ message: "please provide video or story_type" });
