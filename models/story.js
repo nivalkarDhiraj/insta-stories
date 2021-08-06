@@ -6,14 +6,14 @@ const storySchema = new mongoose.Schema({
 		type: "string",
 		required: true,
 	},
-	story_type : {
+	story_type: {
 		type: "string",
-		required : true,
+		required: true,
 		enum: ["image", "video"],
 	},
 	duration: {
-		type : Number,
-		default : 3
+		type: Number,
+		default: 3,
 	},
 	uploaded_by: {
 		type: ObjectId,
@@ -28,8 +28,8 @@ const storySchema = new mongoose.Schema({
 	created_at: {
 		type: Date,
 		default: Date.now,
-		expires: "1d"
-	}
+		index: { unique: true, expires: "1d" },
+	},
 });
 
 module.exports = mongoose.model("Story", storySchema);
