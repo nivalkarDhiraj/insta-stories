@@ -1,15 +1,42 @@
 const Story = require("../models/story");
 const User = require("../models/user");
 
-module.exports.postStory = (req, res) => {
-	const { video_url } = req.body;
+async function monitorDeleteStory() {
+	const pipeline = [
+		{
+			$match: {
+				operationType: "delete",
+			},
+		},
+	];
+
+	const changeStream = Story.watch(pipeline);
+
+	changeStream.on("change", (next) => {
+		storyId = next.documentKey._id;
+		console.log(storyId);
+		User.updateMany({}, { $pull: { stories: storyId } })
+		.then((result) => {
+			console.log(result);
+		}).catch((error) => {
+			console.log(error);
+		});
+	});
+}
+
+monitorDeleteStory();
+
+module.exports.postVideo = (req, res) => {
+	const { story_url, story_type } = req.body;
 	const userId = req.user._id;
-	if (!video_url) {
-		return res.status(400).json({ message: "please provide video" });
+	if (!story_url || !story_type) {
+		return res.status(400).json({ message: "please provide video or story_type" });
 	}
 	const newStory = new Story({
-		video_url: video_url,
+		story_url: story_url,
 		uploaded_by: userId,
+		story_type : story_type,
+		duration : 30000, //add getVideoDuration here
 	});
 
 	newStory
@@ -66,7 +93,6 @@ module.exports.getStoriesById = (req, res) => {
 // 		{
 // 			$sort: { createdAt: 1 },
 // 		},
-// 	])
 // 		.then((stories) => {
 // 			res.json(stories);
 // 		})
@@ -74,9 +100,11 @@ module.exports.getStoriesById = (req, res) => {
 // 			return res.status(500).json({ message: error.message });
 // 		});
 // };
+
 module.exports.getAllStories = (req, res) => {
-	User.find({ 'stories.0' :{ $exists: true} }
-		).select("-password -following -followers").populate("stories", "_id video_url uploaded_by viewed_by created_at")
+	User.find({ "stories.0": { $exists: true } })
+		.select("-password -following -followers")
+		.populate("stories")
 		.then((stories) => {
 			res.json(stories);
 		})
@@ -84,7 +112,6 @@ module.exports.getAllStories = (req, res) => {
 			return res.status(500).json({ message: error.message });
 		});
 };
-
 
 module.exports.storyViewed = async (req, res) => {
 	const { storyId } = req.params;

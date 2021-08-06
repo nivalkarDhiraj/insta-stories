@@ -3,7 +3,7 @@ const router = express.Router();
 const storyController = require("../controllers/story");
 const checkAuth = require("../middlewares/checkAuth");
 
-router.post("/", checkAuth, storyController.postStory);
+router.post("/video", checkAuth, storyController.postVideo);
 router.get("/myStories", checkAuth, storyController.getMyStories);
 router.get("/:id", checkAuth, storyController.getStoriesById);
 router.get("/", checkAuth, storyController.getAllStories);
