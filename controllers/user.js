@@ -38,6 +38,7 @@ module.exports.signup = (req, res) => {
 
 module.exports.login = (req, res) => {
 	const { email, password } = req.body;
+	console.log(req);
 	if (!email || !password) {
 		return res.status(400).json({ message: "Please enter all the fields." });
 	}
