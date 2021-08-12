@@ -3,7 +3,14 @@ const router = express.Router();
 const storyController = require("../controllers/story");
 const checkAuth = require("../middlewares/checkAuth");
 
+const { upload } = require("../db");
+
+router.post("/", upload.single("file"), (req, res) => {
+	res.json(req.file.filename);
+});
+
 router.post("/video", checkAuth, storyController.postVideo);
+router.post("/image", checkAuth, storyController.postImage);
 router.get("/myStories", checkAuth, storyController.getMyStories);
 router.get("/:id", checkAuth, storyController.getStoriesById);
 router.get("/", checkAuth, storyController.getAllStories);

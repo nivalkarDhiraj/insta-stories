@@ -31,13 +31,45 @@ module.exports.postVideo = (req, res) => {
 	const story_type = "video";
 	const userId = req.user._id;
 	if (!story_url || !story_type) {
-		return res.status(400).json({ message: "please provide video or story_type" });
+		return res.status(400).json({ message: "please provide video" });
 	}
 	const newStory = new Story({
 		story_url: story_url,
 		uploaded_by: userId,
 		story_type : story_type,
 		duration : 30000, //add getVideoDuration here
+	});
+
+	newStory
+		.save()
+		.then((story) => {
+			User.findByIdAndUpdate(userId, {
+				$push: { stories: story._id },
+			})
+				.then(() => {
+					return res.status(201).json({ message: "Story uploaded successfully." });
+				})
+				.catch((error) => {
+					return res.status(500).json({ message: error.message });
+				});
+		})
+		.catch((error) => {
+			return res.status(500).json({ message: error.message });
+		});
+};
+
+module.exports.postImage = (req, res) => {
+	const { story_url } = req.body;
+	const story_type = "image";
+	const userId = req.user._id;
+	if (!story_url || !story_type) {
+		return res.status(400).json({ message: "please provide image" });
+	}
+	const newStory = new Story({
+		story_url: story_url,
+		uploaded_by: userId,
+		story_type : story_type,
+		duration : 3000, 
 	});
 
 	newStory
