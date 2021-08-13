@@ -1,6 +1,7 @@
 const Story = require("../models/story");
 const User = require("../models/user");
 
+//automatically delete the reference of the story in the users table when the stories are expired
 async function monitorDeleteStory() {
 	const pipeline = [
 		{
@@ -26,6 +27,7 @@ async function monitorDeleteStory() {
 
 monitorDeleteStory();
 
+//post the story as video
 module.exports.postVideo = (req, res) => {
 	const { story_url } = req.body;
 	const story_type = "video";
@@ -58,6 +60,7 @@ module.exports.postVideo = (req, res) => {
 		});
 };
 
+//post the image as story
 module.exports.postImage = (req, res) => {
 	const { story_url } = req.body;
 	const story_type = "image";
@@ -90,6 +93,7 @@ module.exports.postImage = (req, res) => {
 		});
 };
 
+//get my stories
 module.exports.getMyStories = (req, res) => {
 	const userId = req.user._id;
 	Story.find({ uploaded_by: userId })
@@ -101,6 +105,7 @@ module.exports.getMyStories = (req, res) => {
 		});
 };
 
+//get stories by user id
 module.exports.getStoriesById = (req, res) => {
 	const myUserId = req.user._id;
 	const otherUserId = req.params.id;
@@ -134,6 +139,7 @@ module.exports.getStoriesById = (req, res) => {
 // 		});
 // };
 
+//get all the stories
 module.exports.getAllStories = (req, res) => {
 	User.find({ "stories.0": { $exists: true } })
 		.select("-password -following -followers")
@@ -146,6 +152,7 @@ module.exports.getAllStories = (req, res) => {
 		});
 };
 
+//add user to viewedby array of stories
 module.exports.storyViewed = async (req, res) => {
 	const { storyId } = req.params;
 	const myUserId = req.user._id;
@@ -174,6 +181,7 @@ module.exports.storyViewed = async (req, res) => {
 	return res.send("ok");
 };
 
+// delete story by story id 
 module.exports.deleteStory = (req, res) => {
 	const { storyId } = req.params;
 	const myUserId = req.user._id;

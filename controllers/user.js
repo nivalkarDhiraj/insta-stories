@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+// user signup
 module.exports.signup = (req, res) => {
 	const { name, email, password, image_url } = req.body;
 	if (!name || !email || !password) {
@@ -36,6 +37,7 @@ module.exports.signup = (req, res) => {
 	});
 };
 
+// user login
 module.exports.login = (req, res) => {
 	const { email, password } = req.body;
 	console.log(req);
@@ -70,6 +72,7 @@ module.exports.login = (req, res) => {
 	});
 };
 
+// get all the users
 module.exports.getAll = (req, res) => {
 	User.find()
 		.select("-password")
@@ -81,6 +84,7 @@ module.exports.getAll = (req, res) => {
 		});
 };
 
+//get your profile
 module.exports.getProfile = (req, res) => {
 	User.findById(req.user._id)
 		.select("-password")
@@ -92,6 +96,7 @@ module.exports.getProfile = (req, res) => {
 		});
 };
 
+//get a user by id
 module.exports.getUser = (req, res) => {
 	const _id = req.params.id;
 	User.findById(_id)
@@ -104,6 +109,7 @@ module.exports.getUser = (req, res) => {
 		});
 };
 
+//follow the user
 module.exports.follow = (req, res) => {
 	const _id = req.params.id;
 
@@ -125,6 +131,7 @@ module.exports.follow = (req, res) => {
 					.select("-password")
 					.then(async (profile) => {
 						await User.findByIdAndUpdate(_id, {
+							//add your profile in others followers list
 							$push: { followers: req.user._id },
 						});
 						return res.status(200).json({ message: `You followed ${user.name}` });
@@ -137,8 +144,6 @@ module.exports.follow = (req, res) => {
 		.catch((err) => {
 			return res.status(500).json({ message: err.message });
 		});
-
-	//add your profile in others followers list
 };
 
 module.exports.unfollow = (req, res) => {
@@ -156,6 +161,7 @@ module.exports.unfollow = (req, res) => {
 				return res.status(400).json({ message: "You are not following the user" });
 			} else {
 				User.findByIdAndUpdate(req.user._id, {
+					//add your profile in others following list
 					$pull: { following: _id },
 				})
 					.select("-password")
@@ -173,6 +179,4 @@ module.exports.unfollow = (req, res) => {
 		.catch((err) => {
 			return res.status(500).json({ message: err.message });
 		});
-
-	//add your profile in others followers list
 };

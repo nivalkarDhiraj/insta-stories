@@ -10,12 +10,12 @@ const { upload } = require("../db");
 // 	res.send(req);
 // });
 
-router.post("/video", checkAuth, storyController.postVideo);
-router.post("/image", checkAuth, storyController.postImage);
-router.get("/myStories", checkAuth, storyController.getMyStories);
-router.get("/:id", checkAuth, storyController.getStoriesById);
-router.get("/", checkAuth, storyController.getAllStories);
-router.post("/:storyId", checkAuth, storyController.storyViewed);
-router.delete("/:storyId", checkAuth, storyController.deleteStory);
+router.post("/video", checkAuth, storyController.postVideo); //add video story
+router.post("/image", checkAuth, storyController.postImage); //add image story
+router.get("/myStories", checkAuth, storyController.getMyStories); //get my stories 
+router.get("/:id", checkAuth, storyController.getStoriesById); //get stories by user id
+router.get("/", checkAuth, storyController.getAllStories); //get all stories
+router.post("/:storyId", checkAuth, storyController.storyViewed); //add user to viewedby array of stories
+router.delete("/:storyId", checkAuth, storyController.deleteStory); //delete story
 
 module.exports = router;
