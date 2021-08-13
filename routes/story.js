@@ -5,10 +5,10 @@ const checkAuth = require("../middlewares/checkAuth");
 
 const { upload } = require("../db");
 
-router.post("/", upload.single("file"), (req, res) => {
-	console.log(req);
-	res.send(req);
-});
+// router.post("/", upload.single("file"), (req, res) => {
+// 	console.log(req);
+// 	res.send(req);
+// });
 
 router.post("/video", checkAuth, storyController.postVideo);
 router.post("/image", checkAuth, storyController.postImage);
