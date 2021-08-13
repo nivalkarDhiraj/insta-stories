@@ -6,7 +6,7 @@ const checkAuth = require("../middlewares/checkAuth");
 const { upload } = require("../db");
 
 router.post("/", upload.single("file"), (req, res) => {
-	res.json(req);
+	res.send(req);
 });
 
 router.post("/video", checkAuth, storyController.postVideo);
