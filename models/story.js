@@ -13,7 +13,7 @@ const storySchema = new mongoose.Schema({
 	},
 	duration: {
 		type: Number,
-		default: 3,
+		default: 3000,
 	},
 	uploaded_by: {
 		type: ObjectId,
